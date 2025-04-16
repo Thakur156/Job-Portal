@@ -9,9 +9,11 @@ import {
 } from "../controllers/company.controller.js";
 const router = express.Router();
 
+router.use(isAuthenticated);
+
 router.post("/register", registerCompany);
 router.get("/companies", userCompanies);
-router.get("/single-comapny/:id", isAuthenticated, singleCompany);
-router.patch("/update/:id", isAuthenticated, updateCompany);
+router.get("/single-company/:id", singleCompany);
+router.patch("/update/:id", updateCompany);
 
 export default router;
