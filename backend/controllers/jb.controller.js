@@ -71,7 +71,9 @@ export const getAllJobs = AsyncHandler(async (req, res) => {
     ],
   };
 
-  const jobs = await Job.find(query);
+  const jobs = await Job.find(query).populate({ path: "company" }).sort({
+    createdAt: -1,
+  });
   if (!jobs.length) {
     return res.status(400).json({ message: "No jobs found" });
   }
