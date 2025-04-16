@@ -3,8 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { connectDB } from "./config/dbConnection.js";
-import useRoutes from "./routes/user.routes.js";
-
+import userRoutes from "./routes/user.routes.js";
+import companyRoutes from "./routes/company.routes.js";
 dotenv.config();
 const app = express();
 // middlewares
@@ -17,7 +17,8 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use("/api/user", useRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/company", companyRoutes);
 
 const PORT = process.env.PORT || 3000;
 // api endpoints
