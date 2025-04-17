@@ -37,8 +37,80 @@ export const applyJob = asyncHandler(async (req, res) => {
 
   // Add the application to the job's applications array
   job.application.push(application._id);
+  await job.save();
   return res.status(200).json({
-    message: "Application successful",
+    message: "Job applied successfully",
+    success: true,
+    application,
+  });
+});
+
+export const getApplicants = asyncHandler(async (req, res) => {
+  const { jobId } = req.params;
+  if (!jobId) {
+    return res.status(400).json({ message: "Job ID not provided" });
+  }
+  const applicants = await Job.findById(jobId).populate({
+    path: "application",
+    populate: {
+      path: "applicant",
+    },
+  });
+
+  if (!applicants) {
+    return res.status(400).json({ message: "No applicants found" });
+  }
+
+  return res.status(200).json({
+    message: "Applicants fetched successfully",
+    success: true,
+    applicants,
+  });
+});
+
+export const appliedJobs = asyncHandler(async (req, res) => {
+  const userId = req.id;
+  if (!userId) {
+    return res.status(400).json({ message: "User ID not provided" });
+  }
+  const appliedJobs = await Application.find({ applicant: userId }).populate({
+    path: "job",
+    populate: {
+      path: "company",
+    },
+  });
+
+  if (!appliedJobs) {
+    return res.status(400).json({ message: "No applications found" });
+  }
+
+  return res.status(200).json({
+    message: "Applied jobs fetched successfully",
+    success: true,
+    appliedJobs,
+  });
+});
+
+export const changeApplicationStatus = asyncHandler(async (req, res) => {
+  const { applicationId } = req.params;
+  const { status } = req.body;
+  if (!applicationId) {
+    return res.status(400).json({ message: "Application ID not provided" });
+  }
+  if (!status) {
+    return res.status(400).json({ message: "Status not provided" });
+  }
+  const application = await Application.findByIdAndUpdate(
+    applicationId,
+    { status: status.toLowerCase() },
+    { new: true }
+  );
+  if (!application) {
+    return res.status(400).json({ message: "Application not found" });
+  }
+
+  return res.status(200).json({
+    message: "Application status updated successfully",
     success: true,
     application,
   });
