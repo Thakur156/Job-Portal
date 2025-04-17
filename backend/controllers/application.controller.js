@@ -22,4 +22,24 @@ export const applyJob = asyncHandler(async (req, res) => {
       success: false,
     });
   }
+
+  const job = await Job.findById(jobId);
+  if (!job) {
+    return res.status(400).json({ message: "Job not found" });
+  }
+  const application = await Application.create({
+    applicant: userId,
+    job: jobId,
+  });
+  if (!application) {
+    return res.status(400).json({ message: "Application failed" });
+  }
+
+  // Add the application to the job's applications array
+  job.application.push(application._id);
+  return res.status(200).json({
+    message: "Application successful",
+    success: true,
+    application,
+  });
 });
