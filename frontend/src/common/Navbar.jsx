@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/popover";
 
 const Navbar = () => {
-  const user = true;
+  const user = false;
   return (
     <div className="h-12  ">
       <div className="flex items-center justify-between  py-3 ">
@@ -38,17 +38,17 @@ const Navbar = () => {
           {!user ? (
             <>
               <Link to={"/login"}>
-                <Button className="bg-orange-500 text-white hover:bg-amber-700">
+                <Button className="bg-orange-500 text-white hover:bg-amber-700 rounded-md px-6 py-2">
                   Login
                 </Button>
               </Link>
               <Link to={"/signup"}>
-                <Button>Signup</Button>
+                <Button className="rounded-md px-6 py-2">Signup</Button>
               </Link>
             </>
           ) : (
             <Avatar className="cursor-pointer">
-              <Popover>
+              <Popover className="bg-gray-500">
                 <PopoverTrigger asChild>
                   <AvatarImage src="https://github.com/shadcn.png" />
                 </PopoverTrigger>
