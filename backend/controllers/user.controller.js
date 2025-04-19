@@ -1,7 +1,7 @@
 import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
-
+import bcrypt from "bcrypt";
 export const signup = asyncHandler(async (req, res) => {
   const { name, email, password, phoneNumber, role } = req.body;
   if (
@@ -74,12 +74,15 @@ export const login = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
   };
-  return res.status(200).cookie("token", token, options).json({
-    message: "Login successful",
-    success: true,
-    user,
-    token,
-  });
+  return res
+    .status(200)
+    .cookie("token", token, options)
+    .json({
+      message: `Welcome ${user.name}`,
+      success: true,
+      user,
+      token,
+    });
 });
 
 export const logout = asyncHandler(async (req, res) => {

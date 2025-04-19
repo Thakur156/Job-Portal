@@ -3,13 +3,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "./ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+
 const Login = () => {
   const [inputs, setInputs] = React.useState({
     email: "",
     password: "",
     role: "",
   });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);
   const onChangeHandler = (e) => {
     setInputs({
       ...inputs,
@@ -19,7 +27,30 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+
+    try {
+      dispatch(setLoading(true));
+      const response = await axios.post(
+        "http://localhost:4000/api/user/login",
+        inputs,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log("error in login", error);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
   return (
     <div>
@@ -78,9 +109,13 @@ const Login = () => {
             </RadioGroup>
           </div>
 
-          <Button type="submit" className=" text-white rounded-md w-full">
-            Login
-          </Button>
+          {loading ? (
+            <span>Creating Please wait...</span>
+          ) : (
+            <Button type="submit" className="text-white rounded-md w-full">
+              Login
+            </Button>
+          )}
           <span className="ml-2">Don't have an Account</span>
           <Link className="text-blue-500 mb-3 ml-2" to={"/signup"}>
             Sign Up
