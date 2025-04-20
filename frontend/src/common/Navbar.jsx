@@ -7,9 +7,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const user = false;
+  const user = useSelector((state) => state.auth.user);
   return (
     <div className="h-12  ">
       <div className="flex items-center justify-between  py-3 ">
@@ -26,10 +27,10 @@ const Navbar = () => {
               <Link to={"/"}>Home</Link>
             </li>
             <li>
-              <Link to={"/"}>Jobs</Link>
+              <Link to={"/jobs"}>Jobs</Link>
             </li>
             <li>
-              <Link to={"/"}>Services</Link>
+              <Link to={"/explore"}>Explore</Link>
             </li>
           </ul>
         </div>
@@ -48,7 +49,7 @@ const Navbar = () => {
             </>
           ) : (
             <Avatar className="cursor-pointer">
-              <Popover className="bg-gray-500">
+              <Popover className="bg-gray-500  z-10">
                 <PopoverTrigger asChild>
                   <AvatarImage src="https://github.com/shadcn.png" />
                 </PopoverTrigger>
@@ -58,7 +59,9 @@ const Navbar = () => {
                   </h2>
                   <p>Lorem ipsum dolor sit amet.</p>
                   <div>
-                    <Button variant="link">Profile</Button>
+                    <Link to={"/profile"}>
+                      <Button variant="link">Profile</Button>
+                    </Link>
                     <Button variant="link">Logout</Button>
                   </div>
                 </PopoverContent>

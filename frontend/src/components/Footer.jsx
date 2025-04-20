@@ -15,16 +15,16 @@ const Footer = () => {
               </span>
             </a>
             <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-              <Link to={"/"}>
-                <li>
-                  <a className="hover:underline me-4 md:me-6">Home</a>
-                </li>
-              </Link>
-              <Link to={"/jobs"}>
-                <li>
-                  <a className="hover:underline me-4 md:me-6">jobs</a>
-                </li>
-              </Link>
+              <li>
+                <Link to="/" className="hover:underline me-4 md:me-6">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/jobs" className="hover:underline me-4 md:me-6">
+                  Jobs
+                </Link>
+              </li>
               <li>
                 <a href="#" className="hover:underline me-4 md:me-6">
                   Browsing
@@ -34,9 +34,9 @@ const Footer = () => {
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2025
+            © 2025{" "}
             <a href="#" className="hover:underline">
-              Code Bless Me
+              Thakur
             </a>
             . All Rights Reserved.
           </span>
@@ -45,4 +45,5 @@ const Footer = () => {
     </div>
   );
 };
+
 export default Footer;

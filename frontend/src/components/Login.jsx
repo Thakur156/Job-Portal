@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading, setUser } from "@/redux/authSlice";
 
 const Login = () => {
   const [inputs, setInputs] = React.useState({
@@ -41,6 +41,7 @@ const Login = () => {
         }
       );
       if (response.data.success) {
+        dispatch(setUser(response.data.user));
         toast.success(response.data.message);
         navigate("/");
       } else {
