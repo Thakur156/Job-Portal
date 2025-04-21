@@ -9,6 +9,7 @@ import Jobs from "./components/Jobs.jsx";
 import Explore from "./components/Explore.jsx";
 import Profile from "./components/Profile.jsx";
 import AppliedJobs from "./components/AppliedJobs.jsx";
+import JobDescription from "./components/JobDescription.jsx";
 const App = () => {
   return (
     <div className="max-w-7xl mx-auto">
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/applied-jobs" element={<AppliedJobs />} />
+        <Route path="/job/description/:id" element={<JobDescription />} />
       </Routes>
       <ToastContainer />
     </div>

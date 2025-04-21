@@ -1,7 +1,10 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 const Job = () => {
+  const navigate = useNavigate();
+  const jobId = 1;
   return (
     <div>
       <div className="p-5 shadow-md rounded-lg border-2 border-gray-300">
@@ -25,18 +28,21 @@ const Job = () => {
             Praesentium, quis illum?
           </p>
           <div className="flex gap-4 items-center justify-between mt-8">
-            <Badge className="bg-orange-500 text-white rounded-xl hover:bg-orange-700 cursor-pointer">
+            <Badge className="bg-black text-white rounded-xl hover:bg-orange-700 cursor-pointer">
               5 position
             </Badge>
-            <Badge className="bg-purple-500 text-white rounded-xl hover:bg-purple-700 cursor-pointer">
+            <Badge className="bg-black text-white rounded-xl hover:bg-purple-700 cursor-pointer">
               Full Time
             </Badge>
-            <Badge className="bg-pink-500 text-white rounded-xl hover:bg-pink-700 cursor-pointer">
+            <Badge className="bg-black text-white rounded-xl hover:bg-pink-700 cursor-pointer">
               15 LPA
             </Badge>
           </div>
           <div className="flex justify-between mt-3 ">
-            <Button className="bg-blue-600 hover:bg-blue-700 rounded-full text-white">
+            <Button
+              onClick={() => navigate(`/job/description/${jobId}`)}
+              className="bg-blue-600 hover:bg-blue-700 rounded-full text-white"
+            >
               Details
             </Button>
             <Button className="bg-orange-600 hover:bg-orange-700 rounded-full text-white">

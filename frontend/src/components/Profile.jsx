@@ -3,8 +3,11 @@ import React from "react";
 import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 import AppliedJobs from "./AppliedJobs";
-
+import UpdateProfileModel from "./UpdateProfileModel";
+import { useSelector } from "react-redux";
 const Profile = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const user = useSelector((state) => state.auth.user);
   return (
     <div className="my-12 w-full">
       <div className="py-5 px-6 rounded-md shadow-lg border-2 border-gray-300 lg:w-1/2 mx-auto">
@@ -17,25 +20,24 @@ const Profile = () => {
               alt="Profile"
             />
             <div>
-              <h1 className="text-gray-600 font-semibold">Name</h1>
+              <h1 className="text-gray-600 font-semibold">{user.name}</h1>
               <p className="text-sm text-gray-600 max-w-[500px]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Veritatis, impedit!
+                {user?.profile?.bio}
               </p>
             </div>
           </div>
-          <Edit className="cursor-pointer" />
+          <Edit onClick={() => setIsOpen(true)} className="cursor-pointer" />
         </div>
 
         {/* Email and Phone */}
         <div className="flex flex-col gap-2 mt-4">
           <div className="flex gap-4 items-center">
             <Mail className="w-5 h-5" />
-            <p>ali@gmail.com</p>
+            <p>{user.email}</p>
           </div>
           <div className="flex gap-4 items-center">
             <Contact className="w-5 h-5" />
-            <p>+9872723826</p>
+            <p>{user.phoneNumber}</p>
           </div>
         </div>
 
@@ -43,7 +45,7 @@ const Profile = () => {
         <div className="mt-4">
           <h1 className="text-gray-600 text-lg font-semibold">Skills</h1>
           <div className="flex flex-wrap gap-2 mt-2">
-            {[1, 2, 3, 4, 5].map((item, index) => (
+            {user?.profile?.skills.map((item, index) => (
               <Badge
                 className="bg-orange-600 rounded-full text-white cursor-pointer hover:bg-orange-700"
                 key={index}
@@ -63,6 +65,7 @@ const Profile = () => {
         </div>
       </div>
       <AppliedJobs />
+      <UpdateProfileModel isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };
