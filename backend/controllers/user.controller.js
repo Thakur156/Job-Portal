@@ -2,6 +2,8 @@ import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
+import { uploadCloudinary } from "../utils/cloudinary.js";
 export const signup = asyncHandler(async (req, res) => {
   const { name, email, password, phoneNumber, role } = req.body;
   if (
@@ -92,11 +94,19 @@ export const logout = asyncHandler(async (req, res) => {
 
 export const updateProfile = asyncHandler(async (req, res) => {
   const { name, phoneNumber, bio, skills } = req.body;
+  const fileLocalPath = req.file?.path;
+
   const skillsArray = skills?.split(",");
   const userId = req.id;
   const user = await User.findById(userId);
   if (!user) {
     return res.status(404).json({ message: "User not found" });
+  }
+  const resume = await uploadCloudinary(fileLocalPath);
+  console.log(resume);
+  if (resume) {
+    user.profile.resume = resume.secure_url;
+    user.profile.resumeName = resume.file.orignalname;
   }
   if (name) user.name = name;
   if (phoneNumber) user.phoneNumber = phoneNumber;
@@ -107,13 +117,6 @@ export const updateProfile = asyncHandler(async (req, res) => {
   return res.status(200).json({
     message: "Profile updated successfully",
     success: true,
-    user: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      role: user.role,
-      profile: user.profile,
-    },
+    user,
   });
 });

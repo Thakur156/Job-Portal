@@ -20,7 +20,7 @@ const Profile = () => {
               alt="Profile"
             />
             <div>
-              <h1 className="text-gray-600 font-semibold">{user.name}</h1>
+              <h1 className="text-gray-600 font-semibold">{user?.name}</h1>
               <p className="text-sm text-gray-600 max-w-[500px]">
                 {user?.profile?.bio}
               </p>
@@ -33,11 +33,11 @@ const Profile = () => {
         <div className="flex flex-col gap-2 mt-4">
           <div className="flex gap-4 items-center">
             <Mail className="w-5 h-5" />
-            <p>{user.email}</p>
+            <p>{user?.email}</p>
           </div>
           <div className="flex gap-4 items-center">
             <Contact className="w-5 h-5" />
-            <p>{user.phoneNumber}</p>
+            <p>{user?.phoneNumber}</p>
           </div>
         </div>
 
@@ -58,9 +58,11 @@ const Profile = () => {
 
         {/* Resume */}
         <div className="mt-4">
-          <h4 className="text-gray-400 text-lg font-semibold">Resume</h4>
+          <h4 className="text-gray-400 text-lg font-semibold">
+            {user?.profile?.resume}
+          </h4>
           <Link to="/" className="text-orange-600 hover:underline">
-            Rashid
+            {user?.profile?.resumeName}
           </Link>
         </div>
       </div>

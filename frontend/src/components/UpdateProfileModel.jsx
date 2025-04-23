@@ -105,7 +105,7 @@ const UpdateProfileModal = ({ isOpen, setIsOpen }) => {
           />
           <input
             type="file"
-            accept="image/*"
+            accept="application/pdf"
             onChange={fileHandler}
             name="file"
             id="file"
