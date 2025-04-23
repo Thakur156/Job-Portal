@@ -6,12 +6,13 @@ import {
   updateProfile,
 } from "../controllers/user.controller.js";
 import { isAuthenticated } from "../middleware/isAuthenticated.js";
-import { singleUpload } from "../middleware/multer.js";
+import { upload } from "../middleware/multer.js";
+
 const router = express.Router();
 
-router.post("/signup", singleUpload, signup);
+router.post("/signup", upload.single("file"), signup);
 router.post("/login", login);
 router.get("/logout", isAuthenticated, logout);
-router.put("/update", isAuthenticated, singleUpload, updateProfile);
+router.put("/update", isAuthenticated, upload.single("file"), updateProfile);
 
 export default router;
