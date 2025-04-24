@@ -118,3 +118,4 @@ export const adminJobs = AsyncHandler(async (req, res) => {
     jobs,
   });
 });
+
