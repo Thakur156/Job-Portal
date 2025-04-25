@@ -27,3 +27,7 @@ const uploadCloudinary = async (localFilePath) => {
 };
 
 export { uploadCloudinary };
+
+
+//output to be checked
+//cloudinary not working
